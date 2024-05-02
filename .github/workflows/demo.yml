@@ -40,7 +40,7 @@ jobs:
       - name: Get artifacts
         uses: actions/download-artifact@v4.1.7
         with:
-          name: dist
+          name: build
       - name: Output contents
         run: ls
       - name: Deploy
