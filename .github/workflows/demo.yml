@@ -4,6 +4,16 @@ on:
     branches:
       - main
 jobs:
+  exam:
+    env:
+      JAVA_VERSION: '11'
+    runs-on: ubuntu-latest
+    steps:
+      - name: print java version
+        run: echo "$JAVA_VERSION. $BUILD"
+        env:
+          BUILD: "BUILD"
+
   lint:
     runs-on: ubuntu-latest
     steps:
