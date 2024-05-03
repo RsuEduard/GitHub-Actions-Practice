@@ -1,0 +1,20 @@
+name: Reusable Deploy
+on: 
+  workflow_call:
+    inputs:
+      artifact-name:
+        description: The name of the deployable artifact files
+        required: true
+        type: string
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get Code
+        uses: dawidd6/action-download-artifact@v3.1.4
+        with:
+          name: ${{ inputs.artifact-name }}
+      - name: List files
+        run: ls
+      - name: Deploy and upload
+        run: echo "Deploying..."
