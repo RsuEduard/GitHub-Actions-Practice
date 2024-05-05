@@ -8,7 +8,7 @@ inputs:
 outputs:
   used-cache:
     description: 'Whether the cache was used'
-    value: ${{ steps.install.outputs.cache }}
+    value: ${{ steps.output.outputs.cache }}
 runs:
   using: 'composite'
   steps:
@@ -20,10 +20,10 @@ runs:
         path: node_modules
         key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
     - name: Install dependencies
-      id: install
       if: inputs.caching != 'true' || steps.cache.outputs.cache-hit != 'true'
       run: npm ci
       shell: bash
     - name: set output
-      run: echo "cache='${{inputs.caching}}'" >> $GITHUB_OUTPUT
+      id: output
+      run: echo "cache=${{inputs.caching}}" >> $GITHUB_OUTPUT
       shell: bash
