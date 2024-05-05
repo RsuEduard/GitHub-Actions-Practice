@@ -22,9 +22,12 @@ jobs:
       - name: Get code
         uses: actions/checkout@v3
       - name: Install and cache dependencies
+        id: 'deps-cache'
         uses: ./.github/actions/cached-deps
         with:
           caching: 'false'
+      - name: Output information
+        run: echo "Cached used? ${{steps.deps-cache.outputs.used-cache}}"
       - name: Test code
         id: test
         run: npm run test
@@ -38,15 +41,16 @@ jobs:
   build:
     needs: test
     runs-on: ubuntu-latest
-    outputs:
-      script-file: ${{ steps.publish.outputs.output-var-name }}
     steps:
       - name: Get code
         uses: actions/checkout@v3
       - name: Install and cache dependencies
+        id: deps-cache
         uses: ./.github/actions/cached-deps
         with:
           caching: 'true'
+      - name: Output information
+        run: echo "Cached used? ${{steps.deps-cache.outputs.used-cache}}"
       - name: Build website
         run: npm run build
       - name: upload artifacts
